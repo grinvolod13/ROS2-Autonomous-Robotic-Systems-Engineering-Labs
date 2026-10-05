@@ -2,7 +2,7 @@ import tqdm
 import math
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import BatteryState
+from sensor_msgs.msg import BatteryState # pyright: ignore[reportMissingImports]
 
 
 
