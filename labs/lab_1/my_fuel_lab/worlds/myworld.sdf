@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<sdf version="1.11">
+<world name="myworld">
+    
+    <physics name="1ms" type="ignored"> <!-- world settings, not an entity -->
+        <max_step_size>0.001</max_step_size> <!-- one physics step: 1 ms -->
+        <real_time_factor>1.0</real_time_factor> <!-- aim: as fast as reality -->
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"></plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"></plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"></plugin>
+    <light type="directional" name="sun">
+        <cast_shadows>false</cast_shadows>
+        <pose>0 0 10 0 0 0</pose>
+        <diffuse>0.8 0.8 0.8 1</diffuse>
+        <specular>0.2 0.2 0.2 1</specular>
+        <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <scene>
+        <ambient>0.6 0.6 0.6 1</ambient>      <!-- Bright environment lighting -->
+        <background>0.3 0.5 0.7 1</background>   <!-- Sky Color (light blue-grey) -->
+        <shadows>true</shadows>
+    </scene>
+
+    <model name="ground_plane">
+        <static>true</static> <!-- never moves -->
+        <link name="link">
+            <collision name="c"> <!-- what things land on -->
+                <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+            </collision>
+            <visual name="v"> <!-- what you see -->
+                <geometry><plane><normal>0 0 1</normal><size>100 100</size></plane></geometry>
+                <material>
+                    <ambient>0.8 0.8 0.8 1</ambient>
+                    <diffuse>0.8 0.8 0.8 1</diffuse>
+                    <specular>0.1 0.1 0.1 1</specular> <!-- зменшено блиск, щоб земля не була як дзеркало -->
+                </material>
+            </visual>
+        </link>
+    </model>
+
+    
+    
+        <include>
+            <name>husky</name>
+            <uri>
+                https://fuel.gazebosim.org/1.0/OpenRobotics/models/COSTAR_HUSKY_SENSOR_CONFIG_1
+            </uri>
+            <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+                <left_joint>front_left_wheel_joint</left_joint> <!-- the names from model.sdf -->
+                <left_joint>rear_left_wheel_joint</left_joint> <!-- listed twice: four-wheel drive -->
+                <right_joint>front_right_wheel_joint</right_joint>
+                <right_joint>rear_right_wheel_joint</right_joint>
+                <wheel_separation>0.5708</wheel_separation> <!-- metres, left wheel to right wheel -->
+                <wheel_radius>0.1651</wheel_radius> <!-- metres -->
+            </plugin>
+        </include>
+
+
+</world>
+
+
+</sdf>
