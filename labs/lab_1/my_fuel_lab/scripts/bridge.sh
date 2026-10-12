@@ -1,1 +1,1 @@
-ros2 launch ros_gz_bridge ros_gz_bridge.launch.py bridge_name:=ros_gz_bridge  config_file:=labs/lab_1/my_fuel_lab/config/bridge.yaml
+ros2 run ros_gz_bridge parameter_bridge --ros-args -p config_file:=labs/lab_1/my_fuel_lab/config/bridge.yaml
